@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grapper · Talent Management</title>
+<meta name="description" content="Grapper, agence de talent management. Nous propulsons nos talents.">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="grain-ecran" aria-hidden="true"></div>
+<div class="curseur" id="curseur"><span class="curseur-anneau"></span><span class="curseur-point"></span></div>
+
+<header class="tete">
+  <a href="#haut" class="marque"><img src="logo.png" alt=""><span>grapper</span></a>
+  <nav class="tete-liens">
+    <a href="#apropos">À propos</a>
+    <a href="#services">Ce qu'on fait</a>
+    <a href="#creatrices">Nos talents</a>
+    <a href="#marques">Marques</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="tete-droite">
+    <label class="energie" title="Baisse l'énergie : tout se calme. Monte-la : tout s'anime.">
+      <input type="range" id="energie" min="0" max="100" value="70" aria-label="Énergie du site">
+      <output id="energie-valeur">70</output>
+    </label>
+    <a class="bouton bouton-clair aimant" href="https://app.grapperagency.com"><span>Espace créateur</span></a>
+    <button class="bouton-menu" id="ouvrir-menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<nav class="menu" id="menu" aria-hidden="true">
+  <a href="#apropos" data-ferme>À propos</a>
+  <a href="#services" data-ferme>Ce qu'on fait</a>
+  <a href="#creatrices" data-ferme>Nos talents</a>
+  <a href="#marques" data-ferme>Les marques</a>
+  <a href="#contact" data-ferme>Écrire</a>
+  <a href="https://app.grapperagency.com">Espace créateur</a>
+</nav>
+
+<main id="haut">
+
+  <section class="hero">
+    <div class="matiere" aria-hidden="true"><div class="goo"><canvas id="grappe"></canvas></div></div>
+    <div class="hero-int">
+      <p class="sur-titre reveal">Agence de Talent Management</p>
+      <h1 class="lignes">
+        <span class="ligne"><span>Nous propulsons</span></span>
+        <span class="ligne"><span>nos <em>talents.</em></span></span>
+      </h1>
+      <p class="hero-texte reveal"><span class="etincelle">✨</span> Ton univers mérite d'aller plus loin</p>
+      <div class="hero-actions reveal">
+        <a href="#contact" class="bouton bouton-plein aimant"><span>Nous écrire</span></a>
+        <a href="#services" class="bouton bouton-ligne aimant"><span>Ce qu'on fait</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- À propos -->
+  <section class="apropos" id="apropos">
+    <div class="apropos-tete">
+      <p class="sur-titre reveal">À propos</p>
+      <h2 class="reveal">Agence de <em>talent management.</em></h2>
+    </div>
+    <div class="apropos-texte">
+      <p class="apropos-grand reveal">Nous accompagnons des créateurs de tous univers, avec une idée fixe : les faire grandir.</p>
+      <p class="reveal">Agence de talent management indépendante, nous construisons avec chaque talent une marque à part entière et l'ouvrons aux bonnes collaborations, en France et au-delà. Notre approche est sur mesure : une lecture fine des audiences, des tendances et des attentes des marques, et une relation directe avec les équipes qui décident.</p>
+      <p class="reveal">Nous travaillons avec des marques nationales et internationales et des créateurs suivis par des millions de personnes, sur des campagnes qui parlent vraiment à leur public. Et chaque euro, chaque contrat, chaque statut de campagne reste visible pour le talent, du premier brief au dernier virement.</p>
+    </div>
+    <ul class="chiffres">
+      <li class="reveal"><b data-compte="3" data-suffixe=" ans">3 ans</b><span class="chiffre-titre">d'expérience</span><p>Une équipe venue des médias, de la marque et du marketing d'influence.</p></li>
+      <li class="reveal"><b data-compte="2500" data-prefixe="+">+2 500</b><span class="chiffre-titre">campagnes gérées</span><p>Du brief au paiement, chacune suivie de bout en bout, et visible dans l'espace du talent.</p></li>
+      <li class="reveal"><b>100 %</b><span class="chiffre-titre">transparent</span><p>Contrats, montants, commissions : tout est visible dans ton espace, en même temps que nous.</p></li>
+    </ul>
+  </section>
+
+  <!-- Ce qu'on fait : un bento -->
+  <section class="section" id="services">
+    <div class="section-tete">
+      <h2 class="reveal">Ce qu'on fait, <em>ensemble.</em></h2>
+      <p class="reveal">Ton contenu, tes partenariats, tes opportunités, et un espace où tout est écrit noir sur blanc.</p>
+    </div>
+    <div class="bento" id="bento">
+      <article class="carte large">
+        <p class="carte-etiquette">Stratégie de contenu</p>
+        <h3>Ton contenu, un cran au-dessus.</h3>
+        <p>On regarde ton contenu comme une marque le regarderait : ce qui accroche, ce qui manque, ce qui fera venir les bonnes. Un point régulier, des idées concrètes, un cap qu'on tient à deux.</p>
+        <ul class="etapes-liste"><li>Positionnement</li><li>Ligne éditoriale</li><li>Formats</li><li>Ce que les marques cherchent</li></ul>
+      </article>
+      <article class="carte">
+        <p class="carte-etiquette">Partenariats</p>
+        <h3>Les bonnes marques, aux bonnes conditions.</h3>
+        <p>On te propose des collaborations qui te ressemblent, on négocie, on rédige, on suit chaque livrable jusqu'au paiement. Tu crées, on gère.</p>
+      </article>
+      <article class="carte">
+        <p class="carte-etiquette">Événements</p>
+        <h3>Des portes qui s'ouvrent.</h3>
+        <p>Lancements, voyages, tournages, rencontres : on te propose celles qui valent le déplacement, et on s'occupe du reste.</p>
+      </article>
+      <article class="carte pleine sombre">
+        <p class="carte-etiquette">Ton espace</p>
+        <h3>Tout, en clair, au même endroit.</h3>
+        <p>Chaque campagne avec son statut, son brief, son contrat, ce qui est facturé, ce qui est payé, la commission. Tu n'as pas à demander : c'est écrit, et tu le vois en même temps que nous.</p>
+        <ul class="etapes-liste"><li>Campagnes</li><li>Statuts</li><li>Briefs</li><li>Contrats</li><li>Facturation</li><li>Commissions</li></ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- Nos talents -->
+  <section class="section" id="creatrices">
+    <div class="section-tete">
+      <h2 class="reveal">Nos <em>talents.</em></h2>
+    </div>
+    <div class="creatrices" id="creatrices-grille"></div>
+  </section>
+
+  <!-- Les marques -->
+  <section class="section marques" id="marques">
+    <div class="anneau" id="anneau">
+      <svg viewBox="0 0 400 400" aria-hidden="true">
+        <defs><path id="cercle" d="M200,200 m-160,0 a160,160 0 1,1 320,0 a160,160 0 1,1 -320,0"/></defs>
+        <text class="anneau-texte"><textPath href="#cercle" id="anneau-textpath"></textPath></text>
+      </svg>
+      <img src="logo.png" alt="Grapper" class="anneau-logo">
+    </div>
+    <div class="marques-texte">
+      <h2 class="reveal">Elles <em>reviennent.</em></h2>
+      <p class="reveal">Parce que ça s'est bien passé la première fois. Une collaboration chez nous, c'est une date tenue, une vidéo validée, et un talent fier du résultat.</p>
+      <ul class="marques-liste" id="marques-liste"></ul>
+    </div>
+  </section>
+
+  <!-- Écrire -->
+  <section class="contact" id="contact">
+    <p class="sur-titre reveal">Tu crées, et tu veux aller plus loin ?</p>
+    <a href="mailto:hello@grapperagency.com" class="mail reveal" id="mail"><span>hello@grapperagency.com</span></a>
+    <p class="contact-note reveal">Écris-nous. On répond en vrai, en général le jour même.</p>
+  </section>
+
+</main>
+
+<footer class="pied">
+  <div class="pied-marque"><img src="logo.png" alt=""><span>grapper</span></div>
+  <p class="pied-phrase">Ton univers mérite d'aller plus loin.</p>
+  <nav class="pied-liens" aria-label="Réseaux">
+    <a href="https://www.instagram.com/">Instagram</a>
+    <a href="https://www.tiktok.com/">TikTok</a>
+    <a href="https://www.linkedin.com/">LinkedIn</a>
+  </nav>
+  <p class="pied-petit">© Grapper</p>
+</footer>
+
+<script src="talents.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
