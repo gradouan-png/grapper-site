@@ -14,20 +14,33 @@ window.addEventListener("pointermove", (e) => { sx = e.clientX; sy = e.clientY; 
 })();
 document.addEventListener("pointerover", (e) => { document.body.classList.toggle("sur-lien", Boolean(e.target.closest("a, button, .carte, .creatrice, input"))); });
 
-/* ── L'énergie ───────────────────────────────────────────────────────────── */
-const energie = document.getElementById("energie");
-const sortie = document.getElementById("energie-valeur");
-let niveau = 0.7;
-function poserEnergie(v) {
-  niveau = Math.max(0, Math.min(100, Number(v))) / 100;
-  sortie.value = Math.round(niveau * 100);
-  racine.style.setProperty("--vitesse", niveau === 0 ? 0.0001 : (0.3 + niveau * 1.7).toFixed(2));
-  racine.style.setProperty("--gris", niveau === 0 ? 1 : 0);
-  try { localStorage.setItem("energie", String(Math.round(niveau * 100))); } catch {}
+/* ── L'énergie : fixée à 100. Le curseur est parti de l'en-tête (Gauthier,
+   25 septembre) ; la mécanique reste, `niveau` pilote toujours tout. ── */
+let niveau = 1;
+window.NIVEAU_ENERGIE = niveau;
+
+/* ── Réunir la grappe : le visiteur arrive sur des gouttes éparses, et c'est
+   lui qui les réunit. Rien n'est retenu : le geste est le message. ──────── */
+const cohesion = document.getElementById("cohesion");
+const reunir = document.getElementById("reunir");
+const reunirMot = document.getElementById("reunir-mot");
+window.COHESION = 0;
+if (cohesion) {
+  reunir.classList.add("attente");
+  cohesion.value = 0; /* Chrome restaure la valeur d'un rechargement : non, on repart de zéro */
+  const poser = (v) => {
+    const c = Math.max(0, Math.min(100, Number(v)));
+    window.COHESION = c / 100;
+    cohesion.style.setProperty("--p", `${c}%`);
+    const uni = c >= 92;
+    reunir.classList.toggle("uni", uni);
+    reunirMot.innerHTML = uni ? "Une grappe. <b>C'est ça, Grapper.</b>"
+      : c > 40 ? "Ça se rapproche. <b>Continue.</b>"
+      : "Ils sont là, éparpillés. <b>Réunis-les.</b>";
+  };
+  poser(0);
+  cohesion.addEventListener("input", () => { reunir.classList.remove("attente"); poser(cohesion.value); });
 }
-try { const m = localStorage.getItem("energie"); if (m !== null) energie.value = m; } catch {}
-poserEnergie(energie.value);
-energie.addEventListener("input", () => poserEnergie(energie.value));
 
 /* ── Le menu (téléphone) ─────────────────────────────────────────────────── */
 const menu = document.getElementById("menu");
@@ -47,6 +60,7 @@ document.addEventListener("keydown", (e) => { if (e.key === "Escape") basculerMe
    Le canvas est flouté puis contrasté par le CSS (.goo) : les gouttes
    deviennent une matière liquide, avec des bords nets. Elles dérivent, se
    rejoignent, se séparent ; la souris en attire une. C'est la grappe. */
+if (!window.MATIERE_WEBGL) {
 const toile = document.getElementById("grappe");
 const ctx = toile.getContext("2d");
 let largeur = 0, hauteur = 0;
@@ -87,6 +101,8 @@ function boucle(t) {
   requestAnimationFrame(boucle);
 }
 requestAnimationFrame(boucle);
+
+}
 
 /* ── Apparitions : lignes du titre, blocs ────────────────────────────────── */
 const obs = new IntersectionObserver((entrees) => {
@@ -137,10 +153,12 @@ document.querySelectorAll(".creatrice").forEach((el) => obs.observe(el));
 
 /* ── L'anneau des marques ────────────────────────────────────────────────── */
 const anneauTexte = document.getElementById("anneau-textpath");
-anneauTexte.textContent = marques.join("  ·  ") + "  ·  ";
+anneauTexte.textContent = (window.MARQUES_ANNEAU || marques.slice(0, 10)).join("  ·  ") + "  ·  ";
 anneauTexte.setAttribute("textLength", String(Math.round(2 * Math.PI * 160)));
 anneauTexte.setAttribute("lengthAdjust", "spacingAndGlyphs");
 document.getElementById("marques-liste").innerHTML = marques.map((m) => `<li>${m}</li>`).join("");
+const defileMarques = document.getElementById("marques-defile");
+if (defileMarques) defileMarques.innerHTML = [...marques, ...marques].map((m) => `<span>${m}</span>`).join("");
 
 /* ── L'adresse qui frémit ────────────────────────────────────────────────── */
 const mail = document.querySelector("#mail span");
@@ -151,3 +169,37 @@ mail.addEventListener("pointerenter", () => {
     setTimeout(() => { l.style.transform = ""; }, 400 + i * 16);
   });
 });
+
+/* ── Copier l'adresse : un clic, et le bouton le dit ─────────────────────── */
+const copier = document.getElementById("copier");
+if (copier) copier.addEventListener("click", async () => {
+  const adresse = copier.dataset.adresse; const mot = copier.querySelector("span");
+  try { await navigator.clipboard.writeText(adresse); mot.textContent = "Copiée ✓"; }
+  catch { /* navigateur sans presse-papiers : on sélectionne l'adresse, Cmd + C fera le reste */
+    const zone = document.querySelector("#mail span"); const sel = window.getSelection(); const r = document.createRange();
+    r.selectNodeContents(zone); sel.removeAllRanges(); sel.addRange(r); mot.textContent = "Sélectionnée, Cmd + C";
+  }
+  copier.classList.add("fait");
+  setTimeout(() => { mot.textContent = "Copier l'adresse"; copier.classList.remove("fait"); }, 1800);
+});
+
+/* ── L'aperçu de l'espace : quatre écrans qui se relaient ────────────────── */
+const apercu = document.getElementById("apercu");
+if (apercu) {
+  const vues = [...apercu.querySelectorAll(".apercu-vue")];
+  const points = [...apercu.querySelectorAll(".apercu-points i")];
+  const titre = document.getElementById("apercu-titre");
+  let i = 0, minuteur = 0;
+  const montrer = (k) => {
+    vues[i].classList.remove("actif"); vues[i].classList.add("sort"); const ancien = i;
+    setTimeout(() => vues[ancien].classList.remove("sort"), 500);
+    i = k; vues[i].classList.add("actif"); titre.innerHTML = vues[i].dataset.titre;
+    points.forEach((p, n) => p.classList.toggle("actif", n === i));
+  };
+  const tourner = () => { minuteur = setInterval(() => { if (niveau > 0) montrer((i + 1) % vues.length); }, 2600); };
+  tourner();
+  /* la souris arrête le défilé, un clic sur un point choisit l'écran */
+  apercu.addEventListener("pointerenter", () => clearInterval(minuteur));
+  apercu.addEventListener("pointerleave", tourner);
+  points.forEach((p, n) => p.addEventListener("click", () => montrer(n)));
+}

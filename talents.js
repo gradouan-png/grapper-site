@@ -4,16 +4,16 @@
 window.TALENTS = [
   /* Dix créatrices. `photo` est facultatif (mets le fichier dans photos/).
      `lien` : son Instagram ou TikTok. `univers` : deux ou trois mots. */
-  { nom: "Anaïs",  pseudo: "@anaiswairyy",  univers: "Haircare, skincare",    plateforme: "Tiktok", lien: "https://www.instagram.com/", photo: "" },
-  { nom: "Lily",  pseudo: "@lilyy.nl",  univers: "food · cuisine",   plateforme: "TikTok",    lien: "https://www.tiktok.com/",    photo: "" },
-  { nom: "Laura",  pseudo: "@laudewit",  univers: "mode · street",        plateforme: "Instagram", lien: "https://www.instagram.com/", photo: "" },
-  { nom: "Lucie",  pseudo: "@luciehzh",  univers: "sport · running",    plateforme: "YouTube",   lien: "https://www.youtube.com/",   photo: "" },
-  { nom: "Chachou",  pseudo: "@chachouxchachou",  univers: "voyage · outdoor",   plateforme: "Instagram", lien: "https://www.instagram.com/", photo: "" },
-  { nom: "Francesca",  pseudo: "@francesca.skincare",  univers: "tech · gaming",  plateforme: "TikTok",    lien: "https://www.tiktok.com/",    photo: "" },
-  { nom: "Maeva",  pseudo: "@byvavou",  univers: "famille · maison",     plateforme: "Instagram", lien: "https://www.instagram.com/", photo: "" },
-  { nom: "Orane",  pseudo: "@___oraane",  univers: "humour · sketchs",  plateforme: "Instagram", lien: "https://www.instagram.com/", photo: "" },
-  { nom: "Sarah",  pseudo: "@sarah.bdii",  univers: "musique · scène",        plateforme: "TikTok",    lien: "https://www.tiktok.com/",    photo: "" },
-  { nom: "Marine", pseudo: "@marinegxmes", univers: "bien-être · yoga", plateforme: "Instagram", lien: "https://www.instagram.com/", photo: "" },
+  { nom: "Anaïs",  pseudo: "@anaiswairyy",  univers: "haircare · skincare",   plateforme: "TikTok", lien: "https://www.tiktok.com/@anaiswairyy", photo: "photos/anais.jpg" },
+  { nom: "Lily",  pseudo: "@lilyy.nl",  univers: "make-up · skincare · DIY",   plateforme: "TikTok",    lien: "https://www.tiktok.com/@lilyy.nl",    photo: "photos/lily.jpg" },
+  { nom: "Laura",  pseudo: "@laudewit",  univers: "skincare · haircare · sport",        plateforme: "TikTok", lien: "https://www.tiktok.com/@laudewit", photo: "photos/laura.jpg" },
+  { nom: "Lucie",  pseudo: "@luciehzh",  univers: "études · skincare · sport",    plateforme: "TikTok",   lien: "https://www.tiktok.com/@luciehzh",   photo: "photos/lucie.jpg" },
+  { nom: "Chachou",  pseudo: "@chachouxchachou",  univers: "beauté · lifestyle · humour",   plateforme: "TikTok", lien: "https://www.tiktok.com/@chachouxchachou", photo: "photos/chachou.jpg" },
+  { nom: "Francesca",  pseudo: "@francesca.skincare",  univers: "skincare · haircare",  plateforme: "TikTok",    lien: "https://www.tiktok.com/@francesca.skincare",    photo: "photos/francesca.jpg" },
+  { nom: "Maeva",  pseudo: "@byvavou",  univers: "skincare · sport",     plateforme: "TikTok", lien: "https://www.tiktok.com/@byvavou", photo: "photos/maeva.jpg" },
+  { nom: "Orane",  pseudo: "@___oraane",  univers: "études · sport · skincare",  plateforme: "TikTok", lien: "https://www.tiktok.com/@___oraane", photo: "photos/orane.jpg" },
+  { nom: "Sarah",  pseudo: "@sarah.bdii",  univers: "skincare · haircare · make-up",        plateforme: "TikTok",    lien: "https://www.tiktok.com/@sarah.bdii",    photo: "photos/sarah.jpg" },
+  { nom: "Marine", pseudo: "@marinegxmes", univers: "sport · outfit · beauté", plateforme: "TikTok", lien: "https://www.tiktok.com/@marinegxmes", photo: "photos/marine.jpg" },
 ];
 
 /* Les mots de la grappe, mêlés aux talents : ce que l'agence fait pour eux.
@@ -37,6 +37,13 @@ window.JOURNEE = [
 ];
 
 window.MARQUES = [
-  "MARQUE UNE", "MARQUE DEUX", "MARQUE TROIS", "MARQUE QUATRE",
-  "MARQUE CINQ", "MARQUE SIX", "MARQUE SEPT", "MARQUE HUIT",
+  "Prime Video", "Avène", "Urgo", "Nike", "ESR", "Holy", "NYX", "Erborian", "Sanytol",
+  "Shark", "Emma", "CyberGhost", "iGraal", "Aroma-Zone", "Fruitz", "Haus Labs",
+  "Monopoly Go", "Burger King", "McDonald's", "Jow", "DOP", "Soundcore", "Shokz",
+  "CapCut", "Nocibé", "Sephora", "Tinder", "Dreame", "Biodance", "SKIN1004",
+  "Garnier", "Mixa", "Ducray",
 ];
+
+/* Celles qui tournent dans l'anneau (toutes n'y tiendraient pas lisiblement) ;
+   la liste complète s'affiche en pastilles dessous. */
+window.MARQUES_ANNEAU = ["Sephora", "Nike", "Prime Video", "Burger King", "McDonald's", "Garnier", "NYX", "Tinder", "Nocibé", "CapCut"];

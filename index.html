@@ -4,20 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grapper · Talent Management</title>
-<meta name="description" content="Grapper, agence de talent management. Nous propulsons nos talents.">
+<meta name="description" content="Grapper, agence de talent management. Des grains, une grappe.">
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=1790291420">
 </head>
 <body>
 <div class="grain-ecran" aria-hidden="true"></div>
 <div class="curseur" id="curseur"><span class="curseur-anneau"></span><span class="curseur-point"></span></div>
 
 <header class="tete">
-  <a href="#haut" class="marque"><img src="logo.png" alt=""><span>grapper</span></a>
+  <a href="#haut" class="marque"><img src="logo-lettres.png" alt="Grapper" class="marque-lettres"></a>
   <nav class="tete-liens">
+    <a href="#grappe-histoire">La grappe</a>
     <a href="#apropos">À propos</a>
     <a href="#services">Ce qu'on fait</a>
     <a href="#creatrices">Nos talents</a>
@@ -25,16 +26,13 @@
     <a href="#contact">Contact</a>
   </nav>
   <div class="tete-droite">
-    <label class="energie" title="Baisse l'énergie : tout se calme. Monte-la : tout s'anime.">
-      <input type="range" id="energie" min="0" max="100" value="70" aria-label="Énergie du site">
-      <output id="energie-valeur">70</output>
-    </label>
     <a class="bouton bouton-clair aimant" href="https://app.grapperagency.com"><span>Espace créateur</span></a>
     <button class="bouton-menu" id="ouvrir-menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
   </div>
 </header>
 
 <nav class="menu" id="menu" aria-hidden="true">
+  <a href="#grappe-histoire" data-ferme>La grappe</a>
   <a href="#apropos" data-ferme>À propos</a>
   <a href="#services" data-ferme>Ce qu'on fait</a>
   <a href="#creatrices" data-ferme>Nos talents</a>
@@ -50,14 +48,36 @@
     <div class="hero-int">
       <p class="sur-titre reveal">Agence de Talent Management</p>
       <h1 class="lignes">
-        <span class="ligne"><span>Nous propulsons</span></span>
-        <span class="ligne"><span>nos <em>talents.</em></span></span>
+        <span class="ligne"><span>Des grains.</span></span>
+        <span class="ligne"><span>Une <em>grappe.</em></span></span>
       </h1>
-      <p class="hero-texte reveal"><span class="etincelle">✨</span> Ton univers mérite d'aller plus loin</p>
+      <p class="hero-texte reveal">Grapper réunit des talents de tous univers et grandit avec eux.</p>
       <div class="hero-actions reveal">
         <a href="#contact" class="bouton bouton-plein aimant"><span>Nous écrire</span></a>
         <a href="#services" class="bouton bouton-ligne aimant"><span>Ce qu'on fait</span></a>
       </div>
+      <div class="reunir reveal" id="reunir">
+        <p class="reunir-mot" id="reunir-mot">Ils sont là, éparpillés. <b>Réunis-les.</b></p>
+        <label class="cohesion">
+          <span>éparse</span>
+          <input type="range" id="cohesion" min="0" max="100" value="0" autocomplete="off" aria-label="Réunir la grappe">
+          <span>unie</span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- La grappe : l'histoire, dite par Gauthier -->
+  <section class="grappe" id="grappe-histoire">
+    <figure class="tableau reveal">
+      <div class="tableau-cadre"><img src="photos/grappe.jpg" alt="La grappe peinte par Gauthier à huit ans" onerror="this.parentElement.classList.add('vide'); this.remove()"><span class="tableau-vide">la peinture, bientôt ici</span></div>
+      <figcaption>La grappe. Gauthier, 8 ans.</figcaption>
+    </figure>
+    <div class="parole">
+      <div class="parole-tete reveal"><img src="logo-lettres.png" alt="Grapper" class="marque-lettres"><b>Gauthier</b><span>fondateur</span></div>
+      <div class="bulle reveal"><p>À huit ans, j'ai peint une grappe de raisin. Une peinture d'enfant, des ronds violets serrés les uns contre les autres. Elle est restée accrochée chez mes parents pendant des années, et quand j'ai monté l'agence, je n'ai pas eu à chercher de nom.</p></div>
+      <div class="bulle reveal"><p>Une grappe, ce sont des grains qui poussent ensemble sur la même tige. Aucun ne pousse aux dépens des autres. C'est l'image que j'avais en tête pour Grapper : une agence où l'on partage tout avec ses talents, les chiffres, les contrats, les retours des marques, les doutes aussi. Où l'on avance en même temps qu'eux, à leur rythme, main dans la main.</p></div>
+      <div class="bulle reveal"><p>Le logo d'aujourd'hui a changé. La grappe, elle, est restée. Tout ce qu'on fait ici en découle.</p></div>
     </div>
   </section>
 
@@ -85,30 +105,75 @@
       <h2 class="reveal">Ce qu'on fait, <em>ensemble.</em></h2>
       <p class="reveal">Ton contenu, tes partenariats, tes opportunités, et un espace où tout est écrit noir sur blanc.</p>
     </div>
-    <div class="bento" id="bento">
-      <article class="carte large">
-        <p class="carte-etiquette">Stratégie de contenu</p>
-        <h3>Ton contenu, un cran au-dessus.</h3>
-        <p>On regarde ton contenu comme une marque le regarderait : ce qui accroche, ce qui manque, ce qui fera venir les bonnes. Un point régulier, des idées concrètes, un cap qu'on tient à deux.</p>
-        <ul class="etapes-liste"><li>Positionnement</li><li>Ligne éditoriale</li><li>Formats</li><li>Ce que les marques cherchent</li></ul>
-      </article>
-      <article class="carte">
-        <p class="carte-etiquette">Partenariats</p>
-        <h3>Les bonnes marques, aux bonnes conditions.</h3>
-        <p>On te propose des collaborations qui te ressemblent, on négocie, on rédige, on suit chaque livrable jusqu'au paiement. Tu crées, on gère.</p>
-      </article>
-      <article class="carte">
-        <p class="carte-etiquette">Événements</p>
-        <h3>Des portes qui s'ouvrent.</h3>
-        <p>Lancements, voyages, tournages, rencontres : on te propose celles qui valent le déplacement, et on s'occupe du reste.</p>
-      </article>
-      <article class="carte pleine sombre">
-        <p class="carte-etiquette">Ton espace</p>
-        <h3>Tout, en clair, au même endroit.</h3>
-        <p>Chaque campagne avec son statut, son brief, son contrat, ce qui est facturé, ce qui est payé, la commission. Tu n'as pas à demander : c'est écrit, et tu le vois en même temps que nous.</p>
-        <ul class="etapes-liste"><li>Campagnes</li><li>Statuts</li><li>Briefs</li><li>Contrats</li><li>Facturation</li><li>Commissions</li></ul>
-      </article>
-    </div>
+    <ol class="piliers">
+      <li class="pilier reveal">
+        <span class="pilier-num">01</span>
+        <div class="pilier-corps">
+          <h3>Stratégie de contenu</h3>
+          <p>On regarde ton contenu comme une marque le regarderait : ce qui accroche, ce qui manque, ce qui fera venir les bonnes. Un point régulier, des idées concrètes, un cap qu'on tient ensemble.</p>
+        </div>
+      </li>
+      <li class="pilier reveal">
+        <span class="pilier-num">02</span>
+        <div class="pilier-corps">
+          <h3>Partenariats</h3>
+          <p>On te propose des collaborations qui te ressemblent, on négocie le prix et les conditions, on rédige le contrat, et on suit chaque livrable jusqu'au paiement. Tu crées, on gère le reste, et tu sais à chaque étape où ça en est.</p>
+        </div>
+      </li>
+      <li class="pilier reveal">
+        <span class="pilier-num">03</span>
+        <div class="pilier-corps">
+          <h3>Événements</h3>
+          <p>Lancements de produits, voyages, tournages, rencontres avec les marques : on te propose les opportunités qui valent le déplacement et qui servent ton image. On organise, on coordonne avec la marque, et tu n'as plus qu'à être là.</p>
+        </div>
+      </li>
+      <li class="pilier reveal">
+        <span class="pilier-num">04</span>
+        <div class="pilier-corps">
+          <h3>Adaptation aux tendances</h3>
+          <p>Le marché de l'influence bouge vite : les formats, les plateformes et ce que les marques attendent changent d'une saison à l'autre. On veille pour toi, on te dit ce qui change et ce que ça implique pour ton contenu, et on ajuste le cap ensemble.</p>
+        </div>
+      </li>
+      <li class="pilier reveal espace">
+        <span class="pilier-num">05</span>
+        <div class="pilier-corps">
+          <h3>Ton espace</h3>
+          <p>Chaque campagne avec son statut, son brief, son contrat, ce qui est facturé, ce qui est payé, la commission. Tu n'as pas à demander : c'est écrit, et tu le vois en même temps que nous.</p>
+        </div>
+        <div class="apercu" aria-hidden="true" id="apercu">
+          <div class="apercu-barre"><span></span><span></span><span></span><b id="apercu-titre">Mes campagnes</b></div>
+          <div class="apercu-vues">
+            <div class="apercu-vue actif" data-titre="Mes campagnes">
+              <div class="apercu-ligne"><span>Marque A</span><i class="ok">Payée</i><em>2 400 €</em></div>
+              <div class="apercu-ligne"><span>Marque B</span><i class="cours">Preview validée</i><em>1 800 €</em></div>
+              <div class="apercu-ligne"><span>Marque C</span><i class="attente">Contrat envoyé</i><em>3 200 €</em></div>
+              <div class="apercu-ligne"><span>Marque D</span><i class="cours">Script en relecture</i><em>1 200 €</em></div>
+            </div>
+            <div class="apercu-vue" data-titre="Mon calendrier">
+              <div class="cal">
+                <b>L</b><b>M</b><b>M</b><b>J</b><b>V</b><b>S</b><b>D</b>
+                <span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span class="j script">7</span><span>8</span><span>9</span><span class="j preview">10</span><span>11</span><span>12</span>
+                <span>13</span><span>14</span><span class="j post">15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                <span>20</span><span class="j script">21</span><span>22</span><span>23</span><span>24</span><span class="j event">25</span><span>26</span>
+              </div>
+              <div class="cal-legende"><i class="script"></i>script <i class="preview"></i>preview <i class="post"></i>post <i class="event"></i>événement</div>
+            </div>
+            <div class="apercu-vue" data-titre="Mes factures">
+              <div class="apercu-ligne"><span>F-2026-041</span><i class="ok">Payée le 12/09</i><em>2 400 €</em></div>
+              <div class="apercu-ligne"><span>F-2026-040</span><i class="ok">Payée le 28/08</i><em>1 500 €</em></div>
+              <div class="apercu-ligne"><span>F-2026-039</span><i class="cours">Envoyée</i><em>1 800 €</em></div>
+              <div class="apercu-ligne"><span>À facturer</span><i class="attente">Post publié</i><em>3 200 €</em></div>
+            </div>
+            <div class="apercu-vue" data-titre="Brief &amp; contrat">
+              <div class="doc"><b>Brief · Marque B</b><span style="width:92%"></span><span style="width:70%"></span><span style="width:84%"></span><span style="width:40%"></span></div>
+              <div class="doc"><b>Contrat · signé le 03/09</b><span style="width:60%"></span><span style="width:88%"></span><i class="ok">Exclusivité 30 jours</i></div>
+            </div>
+          </div>
+          <div class="apercu-points"><i class="actif"></i><i></i><i></i><i></i></div>
+        </div>
+      </li>
+    </ol>
   </section>
 
   <!-- Nos talents -->
@@ -131,6 +196,7 @@
     <div class="marques-texte">
       <h2 class="reveal">Elles <em>reviennent.</em></h2>
       <p class="reveal">Parce que ça s'est bien passé la première fois. Une collaboration chez nous, c'est une date tenue, une vidéo validée, et un talent fier du résultat.</p>
+      <div class="marques-defile" aria-hidden="true"><div id="marques-defile"></div></div>
       <ul class="marques-liste" id="marques-liste"></ul>
     </div>
   </section>
@@ -139,23 +205,26 @@
   <section class="contact" id="contact">
     <p class="sur-titre reveal">Tu crées, et tu veux aller plus loin ?</p>
     <a href="mailto:hello@grapperagency.com" class="mail reveal" id="mail"><span>hello@grapperagency.com</span></a>
+    <div class="contact-actions reveal">
+      <button class="bouton bouton-ligne copier" id="copier" type="button" data-adresse="hello@grapperagency.com"><span>Copier l'adresse</span></button>
+    </div>
     <p class="contact-note reveal">Écris-nous. On répond en vrai, en général le jour même.</p>
   </section>
 
 </main>
 
 <footer class="pied">
-  <div class="pied-marque"><img src="logo.png" alt=""><span>grapper</span></div>
+  <div class="pied-marque"><img src="logo-lettres.png" alt="Grapper" class="marque-lettres"></div>
   <p class="pied-phrase">Ton univers mérite d'aller plus loin.</p>
   <nav class="pied-liens" aria-label="Réseaux">
-    <a href="https://www.instagram.com/">Instagram</a>
-    <a href="https://www.tiktok.com/">TikTok</a>
-    <a href="https://www.linkedin.com/">LinkedIn</a>
+    <a href="https://www.instagram.com/grapperagency/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.linkedin.com/company/grapper-agency/" target="_blank" rel="noopener">LinkedIn</a>
   </nav>
-  <p class="pied-petit">© Grapper</p>
+  <p class="pied-petit">© Grapper · <a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a></p>
 </footer>
 
-<script src="talents.js"></script>
-<script src="script.js"></script>
+<script src="talents.js?v=1790291420"></script>
+<script src="matiere.js?v=1790291420"></script>
+<script src="script.js?v=1790291420"></script>
 </body>
 </html>
