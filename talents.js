@@ -41,7 +41,7 @@ window.MARQUES = [
   "Shark", "Emma", "CyberGhost", "iGraal", "Aroma-Zone", "Fruitz", "Haus Labs",
   "Monopoly Go", "Burger King", "McDonald's", "Jow", "DOP", "Soundcore", "Shokz",
   "CapCut", "Nocibé", "Sephora", "Tinder", "Dreame", "Biodance", "SKIN1004",
-  "Garnier", "Mixa", "Ducray",
+  "Garnier", "Mixa", "Ducray", "Miniso", "Hema", "DJI",
 ];
 
 /* Celles qui tournent dans l'anneau (toutes n'y tiendraient pas lisiblement) ;
