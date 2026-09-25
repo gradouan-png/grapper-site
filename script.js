@@ -8,7 +8,7 @@ const anneau = document.querySelector(".curseur-anneau");
 let sx = innerWidth / 2, sy = innerHeight / 2, ax = sx, ay = sy;
 window.addEventListener("pointermove", (e) => { sx = e.clientX; sy = e.clientY; point.style.left = `${sx}px`; point.style.top = `${sy}px`; });
 (function suivre() {
-  ax += (sx - ax) * 0.18; ay += (sy - ay) * 0.18;
+  ax += (sx - ax) * 0.35; ay += (sy - ay) * 0.35;
   anneau.style.left = `${ax}px`; anneau.style.top = `${ay}px`;
   requestAnimationFrame(suivre);
 })();
