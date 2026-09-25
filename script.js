@@ -35,8 +35,8 @@ if (cohesion) {
     const uni = c >= 92;
     reunir.classList.toggle("uni", uni);
     reunirMot.innerHTML = uni ? "Une grappe. <b>C'est ça, Grapper.</b>"
-      : c > 40 ? "Ça se rapproche. <b>Continue.</b>"
-      : "Ils sont là, éparpillés. <b>Réunis-les.</b>";
+      : c > 40 ? "Ça pousse. <b>Continue.</b>"
+      : "Des grains. <b>Fais-en une grappe.</b>";
   };
   poser(0);
   cohesion.addEventListener("input", () => { reunir.classList.remove("attente"); poser(cohesion.value); });
@@ -151,14 +151,50 @@ document.getElementById("creatrices-grille").innerHTML = talents.map((t, i) => `
   </a>`).join("");
 document.querySelectorAll(".creatrice").forEach((el) => obs.observe(el));
 
-/* ── L'anneau des marques ────────────────────────────────────────────────── */
-const anneauTexte = document.getElementById("anneau-textpath");
-anneauTexte.textContent = (window.MARQUES_ANNEAU || marques.slice(0, 10)).join("  ·  ") + "  ·  ";
-anneauTexte.setAttribute("textLength", String(Math.round(2 * Math.PI * 160)));
-anneauTexte.setAttribute("lengthAdjust", "spacingAndGlyphs");
-document.getElementById("marques-liste").innerHTML = marques.map((m) => `<li>${m}</li>`).join("");
+/* ── Le manège des marques ───────────────────────────────────────────────── */
+const logos = window.LOGOS || {};
+const tuile = (m) => logos[m] ? `<div class="tuile" data-nom="${m}"><img src="${logos[m]}" alt="${m}" loading="lazy"></div>` : `<div class="tuile" data-nom="${m}"><span>${m}</span></div>`;
+const anneaux = [document.getElementById("anneau-haut"), document.getElementById("anneau-bas")].filter(Boolean);
+if (anneaux.length) {
+  const moitie = Math.ceil(marques.length / 2);
+  const parts = [marques.slice(0, moitie), marques.slice(moitie)];
+  const etat = anneaux.map((a, k) => {
+    a.innerHTML = parts[k].map(tuile).join("");
+    const tuiles = [...a.children]; const n = tuiles.length;
+    const rayon = Math.round((52 + 8) / Math.tan(Math.PI / n)); /* la tuile fait 104 px, on laisse 16 px entre deux */
+    tuiles.forEach((el, i) => { el.style.transform = `rotateY(${(360 / n) * i}deg) translateZ(${rayon}px)`; });
+    return { a, tuiles, n, angle: k === 0 ? 0 : 180 / n, vitesse: k === 0 ? 0.08 : -0.06, rayon };
+  });
+  const nom = document.getElementById("manege-nom");
+  let tenu = false, dernierX = 0, elan = 0;
+  const scene = document.querySelector(".manege-scene");
+  scene.addEventListener("pointerdown", (e) => { tenu = true; dernierX = e.clientX; elan = 0; scene.setPointerCapture(e.pointerId); });
+  scene.addEventListener("pointermove", (e) => { if (!tenu) return; const dx = e.clientX - dernierX; dernierX = e.clientX; elan = dx * 0.35; etat.forEach((r) => { r.angle += dx * 0.35; }); });
+  const lacher = () => { tenu = false; };
+  scene.addEventListener("pointerup", lacher); scene.addEventListener("pointercancel", lacher);
+  let pause = false;
+  scene.addEventListener("pointerenter", () => { pause = true; }); scene.addEventListener("pointerleave", () => { pause = false; });
+  (function tourner() {
+    etat.forEach((r) => {
+      if (!tenu) { r.angle += pause && !elan ? 0 : r.vitesse + elan; }
+      r.a.style.transform = `rotateY(${r.angle}deg)`;
+      /* la tuile de face est plus vive, celles de derrière s'estompent */
+      r.tuiles.forEach((el, i) => {
+        const a = (((360 / r.n) * i + r.angle) % 360 + 360) % 360;
+        const face = Math.cos(a * Math.PI / 180); /* 1 devant, -1 derrière */
+        el.style.opacity = String(0.25 + 0.75 * Math.max(0, face));
+      });
+    });
+    elan *= 0.94; if (Math.abs(elan) < 0.02) elan = 0;
+    /* le nom de la marque qui passe devant, sur l'anneau du haut */
+    const r = etat[0]; let meilleur = 0, meilleurFace = -2;
+    r.tuiles.forEach((el, i) => { const a = (((360 / r.n) * i + r.angle) % 360 + 360) % 360; const f = Math.cos(a * Math.PI / 180); if (f > meilleurFace) { meilleurFace = f; meilleur = i; } });
+    nom.textContent = r.tuiles[meilleur].dataset.nom;
+    requestAnimationFrame(tourner);
+  })();
+}
 const defileMarques = document.getElementById("marques-defile");
-if (defileMarques) defileMarques.innerHTML = [...marques, ...marques].map((m) => `<span>${m}</span>`).join("");
+if (defileMarques) defileMarques.innerHTML = [...marques, ...marques].map((m) => logos[m] ? `<span class="defile-logo"><img src="${logos[m]}" alt="">${m}</span>` : `<span>${m}</span>`).join("");
 
 /* ── L'adresse qui frémit ────────────────────────────────────────────────── */
 const mail = document.querySelector("#mail span");

@@ -258,6 +258,19 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
 @media (max-width: 1100px) { .creatrices { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 640px) { .creatrices { grid-template-columns: repeat(2, 1fr); gap: 10px; } .creatrice-visu span { font-size: 44px; } }
 
+/* le manège des marques : deux anneaux de tuiles en 3D, qui tournent en
+   sens inverse ; on les attrape à la souris ou au doigt */
+.manege { position: relative; user-select: none; touch-action: pan-y; }
+.manege-scene { position: relative; height: 380px; perspective: 1100px; perspective-origin: 50% 50%; cursor: grab; }
+.manege-scene:active { cursor: grabbing; }
+.manege-anneau { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; }
+#anneau-haut { margin-top: -78px; } #anneau-bas { margin-top: 78px; }
+.tuile { position: absolute; left: -52px; top: -52px; width: 104px; height: 104px; border-radius: 22px; background: rgba(255,255,255,.06); border: 1px solid var(--bord); display: grid; place-items: center; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 0 20px 40px rgba(0,0,0,.35); }
+.tuile img { width: 58px; height: 58px; border-radius: 14px; object-fit: cover; }
+.tuile span { font-size: 12px; font-weight: 600; letter-spacing: -.01em; text-align: center; padding: 0 8px; color: var(--texte); }
+.manege-nom { margin: 8px 0 0; text-align: center; font-weight: 600; font-size: 18px; letter-spacing: -.01em; min-height: 1.4em; }
+.manege-aide { margin: 4px 0 0; text-align: center; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--texte-3); }
+
 /* les marques */
 .marques { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
 .anneau { position: relative; width: min(100%, 440px); aspect-ratio: 1; margin: 0 auto; }
@@ -335,7 +348,7 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
   .pilier.espace .apercu { grid-column: 2; transform: none; max-width: 420px; }
   .creatrices { grid-template-columns: repeat(3, 1fr); }
   .marques { grid-template-columns: 1fr 1.2fr; gap: 30px; }
-  .anneau { width: min(100%, 320px); }
+  .manege-scene { height: 320px; } .tuile { width: 84px; height: 84px; left: -42px; top: -42px; } .tuile img { width: 46px; height: 46px; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -400,9 +413,10 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
 
   /* les marques : pas d'anneau, un défilé */
   .marques { display: block; padding: 70px 0; }
-  .anneau { display: none; }
+  .manege { display: none; }
   .marques-texte { padding: 0 var(--marge); }
   .marques-defile { display: flex; gap: 28px; overflow: hidden; margin: 22px 0 6px; font-weight: 600; font-size: 22px; letter-spacing: -.02em; color: var(--texte-2); white-space: nowrap; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .defile-logo { display: inline-flex; align-items: center; gap: 8px; } .defile-logo img { width: 26px; height: 26px; border-radius: 7px; }
   .marques-defile > div { display: flex; gap: 28px; animation: file-marques 40s linear infinite; }
   @keyframes file-marques { to { transform: translateX(-50%); } }
   .marques-liste { padding: 0 var(--marge); }
