@@ -103,7 +103,7 @@ void main(){
     const s = t * 0.001 * (0.25 + e * 1.1);
     /* téléphone : la matière est un bandeau, centrée ; tablette : à droite, plus près ; bureau : à droite */
     const w = window.innerWidth;
-    const cx = w <= 700 ? 0 : w <= 1100 ? 1.25 : 1.35, cy = 0.1;
+    const cx = w <= 700 ? 0 : w <= 1100 ? 1.5 : 1.35, cy = 0.1;
     const C = window.COHESION ?? 1;
     const etroit = window.innerWidth <= 700;
     const G = new Float32Array(48);
