@@ -66,6 +66,10 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
 .cohesion input { flex: 1; min-width: 200px; height: 28px; cursor: none; -webkit-appearance: none; appearance: none; background: none; }
 .cohesion input::-webkit-slider-runnable-track { height: 3px; border-radius: 3px; background: linear-gradient(90deg, var(--lime) var(--p, 0%), rgba(255,255,255,.14) var(--p, 0%)); }
 .cohesion input::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -9.5px; border-radius: 50%; background: var(--lime); border: 4px solid var(--fond); box-shadow: 0 0 0 1.5px var(--lime), 0 0 18px rgba(214,255,61,.6); transition: transform .2s; }
+/* Chrome dessine la piste et la poignée d'un curseur de réglage avec ses
+   propres pièces : elles ignoraient le `cursor: none` de la page, et la flèche
+   du système réapparaissait sur le trait (vu dans l'enregistrement du 25). */
+.cohesion input, .cohesion input::-webkit-slider-runnable-track, .cohesion input::-webkit-slider-thumb { cursor: none !important; }
 .cohesion input:focus { outline: none; }
 .cohesion input:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--fond), 0 0 0 5px var(--lime); }
 .cohesion input::-moz-range-track { height: 3px; border-radius: 3px; background: rgba(255,255,255,.14); }
