@@ -438,4 +438,5 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
   .mail { font-size: clamp(15px, 6.2vw, 30px); letter-spacing: -.01em; overflow-wrap: anywhere; }
   .hero h1 { font-size: clamp(32px, 12vw, 52px); }
   .pilier, .pilier.espace { grid-template-columns: 34px 1fr; }
+  .hero-actions { flex-direction: column; } .hero-actions .bouton { width: 100%; }
 }
