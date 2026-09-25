@@ -428,3 +428,14 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
   .pied-liens { gap: 16px; }
 }
 @media (min-width: 701px) { .marques-defile { display: none; } }
+
+/* très étroit (moins de 380 px) : l'aperçu et l'adresse se serrent sans se chevaucher */
+@media (max-width: 380px) {
+  .apercu { padding: 10px; font-size: 12px; }
+  .apercu-ligne { grid-template-columns: 1fr auto; gap: 6px 8px; }
+  .apercu-ligne em { grid-column: 2; font-size: 11px; }
+  .apercu-ligne i { font-size: 10px; padding: 2px 6px; }
+  .mail { font-size: clamp(15px, 6.2vw, 30px); letter-spacing: -.01em; overflow-wrap: anywhere; }
+  .hero h1 { font-size: clamp(32px, 12vw, 52px); }
+  .pilier, .pilier.espace { grid-template-columns: 34px 1fr; }
+}
