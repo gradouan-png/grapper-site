@@ -172,9 +172,11 @@ if (anneaux.length) {
   scene.addEventListener("pointermove", (e) => { if (!tenu) return; const dx = e.clientX - dernierX; dernierX = e.clientX; elan = dx * 0.35; etat.forEach((r) => { r.angle += dx * 0.35; }); });
   const lacher = () => { tenu = false; };
   scene.addEventListener("pointerup", lacher); scene.addEventListener("pointercancel", lacher);
-  let pause = false;
+  let pause = false, aLEcran = true;
   scene.addEventListener("pointerenter", () => { pause = true; }); scene.addEventListener("pointerleave", () => { pause = false; });
+  new IntersectionObserver((e) => { aLEcran = e[0].isIntersecting; }, { threshold: 0.05 }).observe(scene);
   (function tourner() {
+    if (!aLEcran || document.hidden) { requestAnimationFrame(tourner); return; }
     etat.forEach((r) => {
       if (!tenu) { r.angle += pause && !elan ? 0 : r.vitesse + elan; }
       r.a.style.transform = `rotateY(${r.angle}deg)`;

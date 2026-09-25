@@ -41,7 +41,7 @@ void main(){
   float t = 0., d;
   vec3 p;
   bool hit = false;
-  for (int i = 0; i < 80; i++) { p = ro + rd*t; d = sdf(p); if (d < .002) { hit = true; break; } t += d*.9; if (t > 9.) break; }
+  for (int i = 0; i < 56; i++) { p = ro + rd*t; d = sdf(p); if (d < .003) { hit = true; break; } t += d; if (t > 9.) break; }
   if (!hit) { gl_FragColor = vec4(0.); return; }
   vec3 n = nrm(p);
   vec3 v = -rd;
@@ -91,14 +91,30 @@ void main(){
   hero.addEventListener("pointerleave", () => { souris = { x: null, y: null }; });
 
   const gouttes = Array.from({ length: 16 }, (_, i) => ({ a: i * 0.9 + (i > 7 ? 0.45 : 0), v: 0.5 + (i % 3) * 0.25, r: 0.5 + (i % 4) * 0.35, x: 0, y: 0, z: 0 }));
+  /* La résolution s'adapte à la machine : on part à 1×, et si les images
+     mettent trop longtemps (ordinateur sans vraie carte graphique), on
+     descend à 0,75× puis 0,5×. Le liquide est doux, l'agrandissement ne se
+     voit pas ; la fluidité, si. */
+  let echelle = 1;
   function tailler() {
-    const dpr = Math.min(1.5, window.devicePixelRatio || 1);
-    toile.width = Math.floor(toile.clientWidth * dpr); toile.height = Math.floor(toile.clientHeight * dpr);
+    const dpr = Math.min(1.25, window.devicePixelRatio || 1) * echelle;
+    toile.width = Math.max(1, Math.floor(toile.clientWidth * dpr)); toile.height = Math.max(1, Math.floor(toile.clientHeight * dpr));
     gl.viewport(0, 0, toile.width, toile.height);
   }
   tailler(); window.addEventListener("resize", tailler);
+  let visible = true, derniere = 0, lentes = 0, mesures = 0;
+  new IntersectionObserver((e) => { visible = e[0].isIntersecting; }, { threshold: 0.02 }).observe(hero);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) derniere = 0; });
 
   function boucle(t) {
+    /* hors écran ou onglet caché : on ne calcule rien */
+    if (!visible || document.hidden) { derniere = 0; requestAnimationFrame(boucle); return; }
+    if (derniere) {
+      const dt = t - derniere; mesures++;
+      if (dt > 34) lentes++; /* moins de 30 images par seconde */
+      if (mesures === 90) { if (lentes > 30 && echelle > 0.5) { echelle = echelle === 1 ? 0.75 : 0.5; tailler(); } mesures = 0; lentes = 0; }
+    }
+    derniere = t;
     const e = (window.NIVEAU_ENERGIE ?? 0.7);
     const s = t * 0.001 * (0.25 + e * 1.1);
     /* téléphone : la matière est un bandeau, centrée ; tablette : à droite, plus près ; bureau : à droite */
