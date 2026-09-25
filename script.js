@@ -42,7 +42,30 @@ if (cohesion) {
       : "Des grains. <b>Fais-en une grappe.</b>";
   };
   poser(0);
-  cohesion.addEventListener("input", () => { reunir.classList.remove("attente"); poser(cohesion.value); });
+  /* Si personne ne touche au curseur, il fait le geste tout seul : 4 s
+     d'attente, 7 s pour monter, 2 s en haut, 7 s pour redescendre, 2 s en
+     bas, et on recommence. Le premier contact l'arrête pour la visite. */
+  let auto = true, depart = performance.now() + 4000;
+  const MONTEE = 7000, PAUSE = 2000, CYCLE = 2 * (MONTEE + PAUSE);
+  const lisse = (t) => t < .5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2) / 2;
+  (function seul(now) {
+    if (!auto) return;
+    const t = now - depart;
+    if (t >= 0) {
+      const p = t % CYCLE;
+      let v;
+      if (p < MONTEE) v = lisse(p / MONTEE);
+      else if (p < MONTEE + PAUSE) v = 1;
+      else if (p < 2 * MONTEE + PAUSE) v = 1 - lisse((p - MONTEE - PAUSE) / MONTEE);
+      else v = 0;
+      cohesion.value = Math.round(v * 100); poser(cohesion.value);
+      reunir.classList.remove("attente");
+    }
+    requestAnimationFrame(seul);
+  })(performance.now());
+  const main = () => { auto = false; reunir.classList.remove("attente"); };
+  cohesion.addEventListener("pointerdown", main); cohesion.addEventListener("keydown", main); cohesion.addEventListener("touchstart", main, { passive: true });
+  cohesion.addEventListener("input", () => { main(); poser(cohesion.value); });
 }
 
 /* ── Le menu (téléphone) ─────────────────────────────────────────────────── */

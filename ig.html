@@ -7,6 +7,7 @@
 <style>
   body { margin: 0; background: #222; display: grid; place-items: center; min-height: 100vh; font-family: "Instrument Sans", sans-serif; color: #fff; }
   .cadre { position: relative; width: 540px; height: 675px; overflow: hidden; background: #07060d; }
+  body.fixe { display: block; min-height: 0; } body.fixe .cadre { position: fixed; left: 0; top: 0; }
   .hero { position: absolute; inset: 0; }
   .matiere, .goo { position: absolute; inset: 0; }
   #grappe { width: 100%; height: 100%; display: block; }
@@ -27,14 +28,18 @@
   window.NIVEAU_ENERGIE = 1;
   window.COHESION = 0;
   window.MATIERE_CENTRE = { cx: 0, cy: 0.55 };
+  if (new URLSearchParams(location.search).get("format") === "reel") { window.MATIERE_CENTRE = { cx: 0, cy: 1.0 }; window.MATIERE_ZOOM = 1.55; }
 </script>
 <script src="matiere.js"></script>
 <script>
+const PARAMS = new URLSearchParams(location.search); const FIXE = PARAMS.get("t"); const REEL = PARAMS.get("format") === "reel";
+if (REEL) { const c = document.querySelector(".cadre"); c.style.width = "540px"; c.style.height = "960px"; for (const id of ["grappe", "sortie"]) { const el = document.getElementById(id); el.width = 1080; el.height = 1920; } }
+if (FIXE !== null) { document.body.classList.add("fixe"); window.MATIERE_TEMPS = Number(FIXE); document.body.style.background = "#07060d"; document.getElementById("aide").hidden = true; }
 (async () => {
   await document.fonts.load('600 64px "Instrument Sans"'); await document.fonts.load('italic 64px "Instrument Serif"');
   const logo = new Image(); logo.src = "logo-lettres.png"; await new Promise((r) => { logo.onload = r; });
   const src = document.getElementById("grappe"), out = document.getElementById("sortie"), ctx = out.getContext("2d");
-  const W = 1080, H = 1350, DUREE = 9000;
+  const W = 1080, H = REEL ? 1920 : 1350, DUREE = 9000;
   const ease = (t) => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
   const clamp = (v) => Math.max(0, Math.min(1, v));
   const texte = (t, y, taille, alpha, serif, couleur) => {
@@ -74,6 +79,27 @@
     /* le logo, en bas, tout le temps */
     ctx.save(); ctx.globalAlpha = 0.95; const lw = 260, lh = lw * logo.height / logo.width; ctx.drawImage(logo, (W - lw) / 2, H - lh - 70, lw, lh); ctx.restore();
     if (t < DUREE) requestAnimationFrame(image); else rec.stop();
+  }
+  if (FIXE !== null) {
+    /* une image : on laisse la matière se dessiner deux fois (positions = cibles), puis on compose */
+    const t = Number(FIXE);
+    window.COHESION = ease(clamp((t - 1500) / 4500));
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    debut = 1; /* neutralise l'enregistreur */
+    rec = { stop() {} };
+    const composer = (now) => { /* même dessin que la boucle, à l'instant t */
+      ctx.fillStyle = "#07060d"; ctx.fillRect(0, 0, W, H);
+      ctx.drawImage(src, 0, 0, W, H);
+      const g = ctx.createLinearGradient(0, H * 0.6, 0, H); g.addColorStop(0, "rgba(7,6,13,0)"); g.addColorStop(1, "rgba(7,6,13,.9)");
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      const a1 = clamp((t - 300) / 500) * (1 - clamp((t - 1900) / 400)); texte("Des grains.", H * 0.80, 96, a1);
+      const a2 = clamp((t - 2100) / 500) * (1 - clamp((t - 5600) / 400)); texte("Ça pousse.", H * 0.80, 96, a2);
+      const a3 = clamp((t - 6000) / 600); texte("Une grappe.", H * 0.76, 104, a3); texte("C'est ça, Grapper.", H * 0.845, 60, a3, true, "#d6ff3d");
+      ctx.save(); ctx.globalAlpha = 0.95; const lw = 260, lh = lw * logo.height / logo.width; ctx.drawImage(logo, (W - lw) / 2, H - lh - 70, lw, lh); ctx.restore();
+    };
+    composer(); await new Promise((r) => requestAnimationFrame(r)); composer();
+    document.title = "pret";
+    return;
   }
   setTimeout(() => requestAnimationFrame(image), 800);
 })();

@@ -13,7 +13,7 @@
   const VS = `attribute vec2 p; void main(){ gl_Position = vec4(p, 0., 1.); }`;
   const FS = `
 precision highp float;
-uniform vec2 R; uniform float T; uniform vec2 M; uniform float E; uniform int S; uniform float C;
+uniform vec2 R; uniform float T; uniform vec2 M; uniform float E; uniform int S; uniform float C; uniform float Z;
 uniform vec3 G[16];
 
 float sm(float a, float b, float k){ float h = clamp(.5 + .5*(b-a)/k, 0., 1.); return mix(b, a, h) - k*h*(1.-h); }
@@ -36,12 +36,12 @@ vec3 env(vec3 d){
 }
 void main(){
   vec2 uv = (gl_FragCoord.xy - .5*R) / R.y;
-  vec3 ro = vec3(0., 0., 5.6);
+  vec3 ro = vec3(0., 0., 5.6 * Z);
   vec3 rd = normalize(vec3(uv, -1.9));
   float t = 0., d;
   vec3 p;
   bool hit = false;
-  for (int i = 0; i < 56; i++) { p = ro + rd*t; d = sdf(p); if (d < .003) { hit = true; break; } t += d; if (t > 9.) break; }
+  for (int i = 0; i < 56; i++) { p = ro + rd*t; d = sdf(p); if (d < .003) { hit = true; break; } t += d; if (t > 9. * Z) break; }
   if (!hit) { gl_FragColor = vec4(0.); return; }
   vec3 n = nrm(p);
   vec3 v = -rd;
@@ -82,7 +82,7 @@ void main(){
   const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
   const loc = gl.getAttribLocation(prog, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-  const uS = gl.getUniformLocation(prog, "S"), uC = gl.getUniformLocation(prog, "C");
+  const uS = gl.getUniformLocation(prog, "S"), uC = gl.getUniformLocation(prog, "C"), uZ = gl.getUniformLocation(prog, "Z");
   const uR = gl.getUniformLocation(prog, "R"), uT = gl.getUniformLocation(prog, "T"), uM = gl.getUniformLocation(prog, "M"), uG = gl.getUniformLocation(prog, "G"), uE = gl.getUniformLocation(prog, "E");
 
   let souris = { x: null, y: null };
@@ -116,6 +116,8 @@ void main(){
     }
     derniere = t;
     const e = (window.NIVEAU_ENERGIE ?? 0.7);
+    /* en capture image par image, le temps vient de l'adresse, pas de l'horloge */
+    if (window.MATIERE_TEMPS !== undefined) t = window.MATIERE_TEMPS;
     const s = t * 0.001 * (0.25 + e * 1.1);
     /* téléphone : la matière est un bandeau, centrée ; tablette : à droite, plus près ; bureau : à droite */
     const w = window.innerWidth;
@@ -129,7 +131,7 @@ void main(){
       const ax = cx * (1 - (1 - C) * 0.55) + Math.cos(s * g.v + g.a) * g.r * ouverture;
       const ay = cy + Math.sin(s * g.v * 1.3 + g.a * 1.7) * g.r * 0.55 * (1 + (1 - C) * 1.6);
       const az = Math.sin(s * g.v * 0.7 + g.a) * 0.5;
-      const k = 0.04 + e * 0.05;
+      const k = window.MATIERE_TEMPS !== undefined ? 1 : 0.04 + e * 0.05;
       g.x += (ax - g.x) * k; g.y += (ay - g.y) * k; g.z += (az - g.z) * k;
       if (i === 0 && souris.x !== null) {
         const asp = toile.clientWidth / toile.clientHeight;
@@ -138,7 +140,7 @@ void main(){
       }
       G[i * 3] = g.x; G[i * 3 + 1] = g.y; G[i * 3 + 2] = g.z;
     });
-    gl.uniform1i(uS, window.MATIERE_STYLE ?? 0); gl.uniform1f(uC, C);
+    gl.uniform1i(uS, window.MATIERE_STYLE ?? 0); gl.uniform1f(uC, C); gl.uniform1f(uZ, window.MATIERE_ZOOM ?? 1);
     gl.uniform2f(uR, toile.width, toile.height); gl.uniform1f(uT, s); gl.uniform1f(uE, e);
     gl.uniform2f(uM, souris.x ?? -1, souris.y ?? -1); gl.uniform3fv(uG, G);
     gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
