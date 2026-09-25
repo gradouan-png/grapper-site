@@ -2,17 +2,20 @@ const talents = window.TALENTS || [];
 const marques = window.MARQUES || [];
 const racine = document.documentElement;
 
-/* ── Le curseur : le point suit, l'anneau rattrape ───────────────────────── */
-const point = document.querySelector(".curseur-point");
-const anneau = document.querySelector(".curseur-anneau");
-let sx = innerWidth / 2, sy = innerHeight / 2, ax = sx, ay = sy;
-window.addEventListener("pointermove", (e) => { sx = e.clientX; sy = e.clientY; point.style.left = `${sx}px`; point.style.top = `${sy}px`; });
-(function suivre() {
-  ax += (sx - ax) * 0.35; ay += (sy - ay) * 0.35;
-  anneau.style.left = `${ax}px`; anneau.style.top = `${ay}px`;
-  requestAnimationFrame(suivre);
-})();
-document.addEventListener("pointerover", (e) => { document.body.classList.toggle("sur-lien", Boolean(e.target.closest("a, button, .carte, .creatrice, input"))); });
+/* ── Le curseur : le point et l'anneau suivent la souris, sans retard ─────
+   L'anneau « rattrapait » la souris avec un temps de retard : sur un
+   mouvement vif, ou près du curseur de la grappe, il partait loin derrière
+   et on le croyait disparu. Il colle maintenant à la souris ; seul son
+   agrandissement sur les liens reste animé. */
+const curseurEl = document.getElementById("curseur");
+let sx = -100, sy = -100;
+const placer = (x, y) => { sx = x; sy = y; curseurEl.style.transform = `translate3d(${x}px, ${y}px, 0)`; };
+window.addEventListener("pointermove", (e) => placer(e.clientX, e.clientY), { passive: true });
+window.addEventListener("mousemove", (e) => placer(e.clientX, e.clientY), { passive: true }); /* certains glissers ne donnent que mousemove */
+window.addEventListener("dragover", (e) => placer(e.clientX, e.clientY), { passive: true });
+document.addEventListener("pointerover", (e) => { document.body.classList.toggle("sur-lien", Boolean(e.target.closest("a, button, .carte, .creatrice, input, .manege-scene"))); });
+document.addEventListener("mouseleave", () => { curseurEl.style.opacity = "0"; });
+document.addEventListener("mouseenter", () => { curseurEl.style.opacity = "1"; });
 
 /* ── L'énergie : fixée à 100. Le curseur est parti de l'en-tête (Gauthier,
    25 septembre) ; la mécanique reste, `niveau` pilote toujours tout. ── */

@@ -38,10 +38,10 @@ h1 em, h2 em { display: inline-block; padding: .05em .06em .22em .08em; margin: 
 
 /* le curseur : un point lime qui ne se perd pas, et un anneau qui le suit
    avec un temps de retard. Sur ce qui se clique, l'anneau s'ouvre. */
-.curseur { position: fixed; z-index: 100; left: 0; top: 0; pointer-events: none; }
+.curseur { position: fixed; z-index: 100; left: 0; top: 0; pointer-events: none; will-change: transform; transition: opacity .2s; }
 /* un liseré sombre autour du point et de l'anneau : sinon, sur un bouton lime
    ou la poignée du curseur, la souris se fondait dans la même couleur */
-.curseur-point { position: absolute; left: 0; top: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--lime); transform: translate(-50%, -50%); box-shadow: 0 0 0 2px rgba(7,6,13,.9), 0 0 12px rgba(214,255,61,.8); }
+.curseur-point { position: absolute; left: 0; top: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--lime); transform: translate(-50%, -50%); box-shadow: 0 0 0 2px rgba(7,6,13,.9), 0 0 12px rgba(214,255,61,.8); }
 .curseur-anneau { position: absolute; left: 0; top: 0; width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid rgba(214,255,61,.75); box-shadow: 0 0 0 1px rgba(7,6,13,.7), inset 0 0 0 1px rgba(7,6,13,.7); transform: translate(-50%, -50%) scale(var(--c, 1)); transition: transform .25s cubic-bezier(.2,.8,.2,1), background .25s, border-color .25s; }
 body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); border-color: var(--lime); }
 
@@ -62,7 +62,7 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
 .reunir-mot { margin: 0 0 12px; color: var(--texte-2); font-size: 15px; transition: color .4s; }
 .reunir-mot b { color: var(--texte); font-weight: 600; }
 .reunir.uni .reunir-mot, .reunir.uni .reunir-mot b { color: var(--lime); }
-.cohesion { display: flex; align-items: center; gap: 14px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--texte-3); }
+.cohesion { display: flex; align-items: center; gap: 14px; cursor: none; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--texte-3); }
 .cohesion input { flex: 1; min-width: 200px; height: 28px; cursor: none; -webkit-appearance: none; appearance: none; background: none; }
 .cohesion input::-webkit-slider-runnable-track { height: 3px; border-radius: 3px; background: linear-gradient(90deg, var(--lime) var(--p, 0%), rgba(255,255,255,.14) var(--p, 0%)); }
 .cohesion input::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -9.5px; border-radius: 50%; background: var(--lime); border: 4px solid var(--fond); box-shadow: 0 0 0 1.5px var(--lime), 0 0 18px rgba(214,255,61,.6); transition: transform .2s; }
