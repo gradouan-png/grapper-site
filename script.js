@@ -175,13 +175,15 @@ if (anneaux.length) {
   let pause = false, aLEcran = true;
   scene.addEventListener("pointerenter", () => { pause = true; }); scene.addEventListener("pointerleave", () => { pause = false; });
   new IntersectionObserver((e) => { aLEcran = e[0].isIntersecting; }, { threshold: 0.05 }).observe(scene);
+  let image = 0;
   (function tourner() {
     if (!aLEcran || document.hidden) { requestAnimationFrame(tourner); return; }
+    image++;
     etat.forEach((r) => {
       if (!tenu) { r.angle += pause && !elan ? 0 : r.vitesse + elan; }
       r.a.style.transform = `rotateY(${r.angle}deg)`;
       /* la tuile de face est plus vive, celles de derrière s'estompent */
-      r.tuiles.forEach((el, i) => {
+      if (image % 3 === 0) r.tuiles.forEach((el, i) => {
         const a = (((360 / r.n) * i + r.angle) % 360 + 360) % 360;
         const face = Math.cos(a * Math.PI / 180); /* 1 devant, -1 derrière */
         el.style.opacity = String(0.25 + 0.75 * Math.max(0, face));

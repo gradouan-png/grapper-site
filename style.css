@@ -31,7 +31,9 @@ h1 em, h2 em { display: inline-block; padding: .05em .06em .22em .08em; margin: 
 .sur-titre { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--texte-2); margin: 0 0 22px; }
 
 /* le grain de l'écran, à peine */
-.grain-ecran { position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .06; mix-blend-mode: overlay;
+/* (le grain d'écran est parti : un calque fixe en mode de fusion forçait le
+   navigateur à repeindre toute la page à chaque défilement, d'où un décalage
+   entre la molette et la page sur les machines modestes.) */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 
 /* le curseur : un point lime qui ne se perd pas, et un anneau qui le suit
@@ -42,7 +44,7 @@ h1 em, h2 em { display: inline-block; padding: .05em .06em .22em .08em; margin: 
 body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); border-color: var(--lime); }
 
 /* l'en-tête, en verre */
-.tete { position: fixed; z-index: 40; inset: 0 0 auto 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 14px var(--marge); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); background: linear-gradient(rgba(7,6,13,.7), rgba(7,6,13,0)); }
+.tete { position: fixed; z-index: 40; inset: 0 0 auto 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 14px var(--marge); background: linear-gradient(rgba(7,6,13,.92), rgba(7,6,13,.6) 70%, rgba(7,6,13,0)); }
 .marque { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -.02em; font-size: 18px; }
 .marque img { width: 30px; border-radius: 50%; }
 .marque-lettres { width: auto !important; height: 22px; border-radius: 0 !important; }
@@ -84,7 +86,7 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
 @media (min-width: 901px) { .bouton-menu { display: none; } }
 @media (max-width: 900px) { .tete-liens, .bouton-clair { display: none; } }
 
-.menu { position: fixed; inset: 0; z-index: 30; background: rgba(7,6,13,.92); backdrop-filter: blur(20px); display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 0 var(--marge); opacity: 0; visibility: hidden; transition: opacity .35s, visibility .35s; }
+.menu { position: fixed; inset: 0; z-index: 30; background: rgba(7,6,13,.97); display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 0 var(--marge); opacity: 0; visibility: hidden; transition: opacity .35s, visibility .35s; }
 .menu.ouvert { opacity: 1; visibility: visible; }
 .menu a { font-size: clamp(34px, 8vw, 56px); font-weight: 600; letter-spacing: -.03em; line-height: 1.1; color: var(--texte-2); transition: color .2s, transform .3s; transform: translateY(12px); }
 .menu.ouvert a { transform: none; }
