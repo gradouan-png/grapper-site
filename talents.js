@@ -48,32 +48,3 @@ window.MARQUES = [
    la liste complète s'affiche en pastilles dessous. */
 window.MARQUES_ANNEAU = ["Sephora", "Nike", "Prime Video", "Burger King", "McDonald's", "Garnier", "NYX", "Tinder", "Nocibé", "CapCut"];
 
-/* Les logos des marques (icônes carrées). Pour en ajouter un : dépose un PNG
-   carré dans logos/ et écris ici le nom exact de la marque → le fichier. */
-window.LOGOS = {
-  "Prime Video": "logos/prime-video.png",
-  "Urgo": "logos/urgo.png",
-  "Nike": "logos/nike.png",
-  "Holy": "logos/holy.png",
-  "NYX": "logos/nyx.png",
-  "Sanytol": "logos/sanytol.png",
-  "Shark": "logos/shark.png",
-  "Emma": "logos/emma.png",
-  "CyberGhost": "logos/cyberghost.png",
-  "Aroma-Zone": "logos/aroma-zone.png",
-  "Fruitz": "logos/fruitz.png",
-  "Haus Labs": "logos/haus-labs.png",
-  "Monopoly Go": "logos/monopoly-go.png",
-  "Burger King": "logos/burger-king.png",
-  "McDonald's": "logos/mcdonald-s.png",
-  "Jow": "logos/jow.png",
-  "Soundcore": "logos/soundcore.png",
-  "CapCut": "logos/capcut.png",
-  "Nocibé": "logos/nocibe.png",
-  "Tinder": "logos/tinder.png",
-  "Dreame": "logos/dreame.png",
-  "Mixa": "logos/mixa.png",
-  "Avène": "logos/avene.png",
-  "Erborian": "logos/erborian.png",
-  "Ducray": "logos/ducray.png"
-};

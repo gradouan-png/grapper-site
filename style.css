@@ -267,7 +267,8 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
 #anneau-haut { margin-top: -78px; } #anneau-bas { margin-top: 78px; }
 .tuile { position: absolute; left: -52px; top: -52px; width: 104px; height: 104px; border-radius: 22px; background: rgba(255,255,255,.06); border: 1px solid var(--bord); display: grid; place-items: center; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 0 20px 40px rgba(0,0,0,.35); }
 .tuile img { width: 58px; height: 58px; border-radius: 14px; object-fit: cover; }
-.tuile span { font-size: 12px; font-weight: 600; letter-spacing: -.01em; text-align: center; padding: 0 8px; color: var(--texte); }
+.tuile span { font-size: 13px; font-weight: 600; letter-spacing: -.01em; line-height: 1.15; text-align: center; padding: 0 8px; color: var(--texte); overflow-wrap: anywhere; }
+.tuile[data-nom^="SKIN"] span, .tuile[data-nom="CyberGhost"] span, .tuile[data-nom="Monopoly Go"] span, .tuile[data-nom="Aroma-Zone"] span, .tuile[data-nom="Prime Video"] span, .tuile[data-nom="Burger King"] span, .tuile[data-nom="McDonald's"] span, .tuile[data-nom="Soundcore"] span, .tuile[data-nom="Haus Labs"] span { font-size: 12px; }
 .manege-nom { margin: 8px 0 0; text-align: center; font-weight: 600; font-size: 18px; letter-spacing: -.01em; min-height: 1.4em; }
 .manege-aide { margin: 4px 0 0; text-align: center; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--texte-3); }
 

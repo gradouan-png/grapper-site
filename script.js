@@ -153,7 +153,7 @@ document.querySelectorAll(".creatrice").forEach((el) => obs.observe(el));
 
 /* ── Le manège des marques ───────────────────────────────────────────────── */
 const logos = window.LOGOS || {};
-const tuile = (m) => logos[m] ? `<div class="tuile" data-nom="${m}"><img src="${logos[m]}" alt="${m}" loading="lazy"></div>` : `<div class="tuile" data-nom="${m}"><span>${m}</span></div>`;
+const tuile = (m) => `<div class="tuile" data-nom="${m}"><span>${m}</span></div>`;
 const anneaux = [document.getElementById("anneau-haut"), document.getElementById("anneau-bas")].filter(Boolean);
 if (anneaux.length) {
   const moitie = Math.ceil(marques.length / 2);
@@ -196,7 +196,7 @@ if (anneaux.length) {
   })();
 }
 const defileMarques = document.getElementById("marques-defile");
-if (defileMarques) defileMarques.innerHTML = [...marques, ...marques].map((m) => logos[m] ? `<span class="defile-logo"><img src="${logos[m]}" alt="">${m}</span>` : `<span>${m}</span>`).join("");
+if (defileMarques) defileMarques.innerHTML = [...marques, ...marques].map((m) => `<span>${m}</span>`).join("");
 
 /* ── L'adresse qui frémit ────────────────────────────────────────────────── */
 const mail = document.querySelector("#mail span");
