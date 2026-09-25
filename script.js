@@ -9,13 +9,15 @@ const racine = document.documentElement;
    agrandissement sur les liens reste animé. */
 const curseurEl = document.getElementById("curseur");
 let sx = -100, sy = -100;
-const placer = (x, y) => { sx = x; sy = y; curseurEl.style.transform = `translate3d(${x}px, ${y}px, 0)`; };
+/* Le retour dans la page se lit sur le MOUVEMENT, pas sur l'événement d'entrée :
+   Chrome ne le renvoyait pas toujours, et le curseur restait caché après une
+   sortie de fenêtre (vu sur l'enregistrement du 25). */
+const placer = (x, y) => { sx = x; sy = y; curseurEl.style.transform = `translate3d(${x}px, ${y}px, 0)`; curseurEl.style.opacity = "1"; };
 window.addEventListener("pointermove", (e) => placer(e.clientX, e.clientY), { passive: true });
 window.addEventListener("mousemove", (e) => placer(e.clientX, e.clientY), { passive: true }); /* certains glissers ne donnent que mousemove */
 window.addEventListener("dragover", (e) => placer(e.clientX, e.clientY), { passive: true });
 document.addEventListener("pointerover", (e) => { document.body.classList.toggle("sur-lien", Boolean(e.target.closest("a, button, .carte, .creatrice, input, .manege-scene"))); });
-document.addEventListener("mouseleave", () => { curseurEl.style.opacity = "0"; });
-document.addEventListener("mouseenter", () => { curseurEl.style.opacity = "1"; });
+document.documentElement.addEventListener("mouseleave", () => { curseurEl.style.opacity = "0"; });
 
 /* ── L'énergie : fixée à 100. Le curseur est parti de l'en-tête (Gauthier,
    25 septembre) ; la mécanique reste, `niveau` pilote toujours tout. ── */
