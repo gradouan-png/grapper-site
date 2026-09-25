@@ -2,22 +2,8 @@ const talents = window.TALENTS || [];
 const marques = window.MARQUES || [];
 const racine = document.documentElement;
 
-/* ── Le curseur : le point et l'anneau suivent la souris, sans retard ─────
-   L'anneau « rattrapait » la souris avec un temps de retard : sur un
-   mouvement vif, ou près du curseur de la grappe, il partait loin derrière
-   et on le croyait disparu. Il colle maintenant à la souris ; seul son
-   agrandissement sur les liens reste animé. */
-const curseurEl = document.getElementById("curseur");
-let sx = -100, sy = -100;
-/* Le retour dans la page se lit sur le MOUVEMENT, pas sur l'événement d'entrée :
-   Chrome ne le renvoyait pas toujours, et le curseur restait caché après une
-   sortie de fenêtre (vu sur l'enregistrement du 25). */
-const placer = (x, y) => { sx = x; sy = y; curseurEl.style.transform = `translate3d(${x}px, ${y}px, 0)`; curseurEl.style.opacity = "1"; };
-window.addEventListener("pointermove", (e) => placer(e.clientX, e.clientY), { passive: true });
-window.addEventListener("mousemove", (e) => placer(e.clientX, e.clientY), { passive: true }); /* certains glissers ne donnent que mousemove */
-window.addEventListener("dragover", (e) => placer(e.clientX, e.clientY), { passive: true });
-document.addEventListener("pointerover", (e) => { document.body.classList.toggle("sur-lien", Boolean(e.target.closest("a, button, .carte, .creatrice, input, .manege-scene"))); });
-document.documentElement.addEventListener("mouseleave", () => { curseurEl.style.opacity = "0"; });
+/* ── Le curseur : c'est une image de curseur système, posée en CSS (voir
+   style.css). Plus rien à faire ici. ─────────────────────────────────── */
 
 /* ── L'énergie : fixée à 100. Le curseur est parti de l'en-tête (Gauthier,
    25 septembre) ; la mécanique reste, `niveau` pilote toujours tout. ── */

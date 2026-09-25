@@ -11,14 +11,21 @@
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--fond); color: var(--texte); font-family: var(--sans); font-size: 17px; line-height: 1.55; cursor: none; -webkit-font-smoothing: antialiased; }
+/* Le curseur est un VRAI curseur système, dessiné par Chrome (une image), plus
+   un élément déplacé par script : il ne peut ni traîner, ni disparaître, ni
+   passer sous quoi que ce soit. Un point lime cerclé de sombre ; sur ce qui se
+   clique, le même point dans un anneau. */
+body { margin: 0; background: var(--fond); color: var(--texte); font-family: var(--sans); font-size: 17px; line-height: 1.55; cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%3Ccircle%20cx%3D%2216.0%22%20cy%3D%2216.0%22%20r%3D%226.5%22%20fill%3D%22rgba%287%2C6%2C13%2C0.9%29%22%2F%3E%3Ccircle%20cx%3D%2216.0%22%20cy%3D%2216.0%22%20r%3D%224.5%22%20fill%3D%22%23d6ff3d%22%2F%3E%3C%2Fsvg%3E") 16 16, auto; -webkit-font-smoothing: antialiased; }
+a, button, input, label, .carte, .creatrice, .manege-scene, .polaroid { cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20viewBox%3D%220%200%2048%2048%22%3E%3Ccircle%20cx%3D%2224.0%22%20cy%3D%2224.0%22%20r%3D%2219%22%20fill%3D%22rgba%28214%2C255%2C61%2C0.14%29%22%20stroke%3D%22%23d6ff3d%22%20stroke-width%3D%221.5%22%2F%3E%3Ccircle%20cx%3D%2224.0%22%20cy%3D%2224.0%22%20r%3D%2220.5%22%20fill%3D%22none%22%20stroke%3D%22rgba%287%2C6%2C13%2C0.6%29%22%20stroke-width%3D%221%22%2F%3E%3Ccircle%20cx%3D%2224.0%22%20cy%3D%2224.0%22%20r%3D%226.5%22%20fill%3D%22rgba%287%2C6%2C13%2C0.9%29%22%2F%3E%3Ccircle%20cx%3D%2224.0%22%20cy%3D%2224.0%22%20r%3D%224.5%22%20fill%3D%22%23d6ff3d%22%2F%3E%3C%2Fsvg%3E") 24 24, pointer; }
+.cohesion input, .cohesion input::-webkit-slider-runnable-track, .cohesion input::-webkit-slider-thumb { cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20viewBox%3D%220%200%2048%2048%22%3E%3Ccircle%20cx%3D%2224.0%22%20cy%3D%2224.0%22%20r%3D%2219%22%20fill%3D%22rgba%28214%2C255%2C61%2C0.14%29%22%20stroke%3D%22%23d6ff3d%22%20stroke-width%3D%221.5%22%2F%3E%3Ccircle%20cx%3D%2224.0%22%20cy%3D%2224.0%22%20r%3D%2220.5%22%20fill%3D%22none%22%20stroke%3D%22rgba%287%2C6%2C13%2C0.6%29%22%20stroke-width%3D%221%22%2F%3E%3Ccircle%20cx%3D%2224.0%22%20cy%3D%2224.0%22%20r%3D%226.5%22%20fill%3D%22rgba%287%2C6%2C13%2C0.9%29%22%2F%3E%3Ccircle%20cx%3D%2224.0%22%20cy%3D%2224.0%22%20r%3D%224.5%22%20fill%3D%22%23d6ff3d%22%2F%3E%3C%2Fsvg%3E") 24 24, pointer !important; }
+.curseur { display: none !important; }
 /* Le noir et blanc du mode « énergie 0 » se pose sur le contenu, JAMAIS sur
    body : un filtre sur body fait de lui le repère des éléments fixés, et le
    curseur comme l'en-tête partaient avec le défilement. */
 main, footer { filter: grayscale(var(--gris)); transition: filter .6s; }
-@media (hover: none) { body { cursor: auto; } .curseur { display: none; } }
+@media (hover: none) { body, a, button, input, label, .carte, .creatrice, .manege-scene { cursor: auto; } }
 a { color: inherit; text-decoration: none; }
-button { font: inherit; color: inherit; background: none; border: 0; cursor: none; }
+button { font: inherit; color: inherit; background: none; border: 0; }
 img { max-width: 100%; display: block; }
 h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -.035em; line-height: 1; }
 h2 { font-size: clamp(36px, 5.2vw, 72px); }
@@ -55,21 +62,20 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
 .tete-liens a { transition: color .2s; } .tete-liens a:hover { color: var(--texte); }
 .tete-droite { display: flex; align-items: center; gap: 12px; }
 .energie { display: flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .1em; padding: 8px 12px; border-radius: 999px; background: var(--verre); border: 1px solid var(--bord); }
-.energie input { width: 90px; accent-color: var(--lime); cursor: none; }
+.energie input { width: 90px; accent-color: var(--lime); }
 .energie output { min-width: 2em; text-align: right; color: var(--lime); font-variant-numeric: tabular-nums; }
 /* réunir la grappe : le geste du site */
 .reunir { margin-top: 40px; max-width: 460px; }
 .reunir-mot { margin: 0 0 12px; color: var(--texte-2); font-size: 15px; transition: color .4s; }
 .reunir-mot b { color: var(--texte); font-weight: 600; }
 .reunir.uni .reunir-mot, .reunir.uni .reunir-mot b { color: var(--lime); }
-.cohesion { display: flex; align-items: center; gap: 14px; cursor: none; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--texte-3); }
-.cohesion input { flex: 1; min-width: 200px; height: 28px; cursor: none; -webkit-appearance: none; appearance: none; background: none; }
+.cohesion { display: flex; align-items: center; gap: 14px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--texte-3); }
+.cohesion input { flex: 1; min-width: 200px; height: 28px; -webkit-appearance: none; appearance: none; background: none; }
 .cohesion input::-webkit-slider-runnable-track { height: 3px; border-radius: 3px; background: linear-gradient(90deg, var(--lime) var(--p, 0%), rgba(255,255,255,.14) var(--p, 0%)); }
 .cohesion input::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; margin-top: -9.5px; border-radius: 50%; background: var(--lime); border: 4px solid var(--fond); box-shadow: 0 0 0 1.5px var(--lime), 0 0 18px rgba(214,255,61,.6); transition: transform .2s; }
 /* Chrome dessine la piste et la poignée d'un curseur de réglage avec ses
    propres pièces : elles ignoraient le `cursor: none` de la page, et la flèche
    du système réapparaissait sur le trait (vu dans l'enregistrement du 25). */
-.cohesion input, .cohesion input::-webkit-slider-runnable-track, .cohesion input::-webkit-slider-thumb { cursor: none !important; }
 .cohesion input:focus { outline: none; }
 .cohesion input:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--fond), 0 0 0 5px var(--lime); }
 .cohesion input::-moz-range-track { height: 3px; border-radius: 3px; background: rgba(255,255,255,.14); }
@@ -269,8 +275,7 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
 /* le manège des marques : deux anneaux de tuiles en 3D, qui tournent en
    sens inverse ; on les attrape à la souris ou au doigt */
 .manege { position: relative; user-select: none; touch-action: pan-y; }
-.manege-scene { position: relative; height: 380px; perspective: 1100px; perspective-origin: 50% 50%; cursor: grab; }
-.manege-scene:active { cursor: grabbing; }
+.manege-scene { position: relative; height: 380px; perspective: 1100px; perspective-origin: 50% 50%; }
 .manege-anneau { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; }
 #anneau-haut { margin-top: -78px; } #anneau-bas { margin-top: 78px; }
 .tuile { position: absolute; left: -52px; top: -52px; width: 104px; height: 104px; border-radius: 22px; background: rgba(255,255,255,.06); border: 1px solid var(--bord); display: grid; place-items: center; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 0 20px 40px rgba(0,0,0,.35); }
@@ -325,8 +330,6 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
 @media (max-width: 560px) { .bento { grid-template-columns: 1fr; } .carte, .carte.large { grid-column: span 1; min-height: 0; } .energie { display: none; } }
 
 /* les pages légales */
-.page-legale { cursor: auto; }
-.page-legale .curseur { display: none; }
 .legal { max-width: 760px; padding: 160px var(--marge) 100px; margin: 0 auto; }
 .legal h1 { font-size: clamp(30px, 4vw, 48px); margin-bottom: 18px; }
 .legal h2 { font-size: 18px; margin: 42px 0 10px; letter-spacing: -.01em; }
