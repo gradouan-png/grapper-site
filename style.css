@@ -370,7 +370,11 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
   .hero { min-height: 0; padding: 0 var(--marge) 56px; display: block; }
   .hero .matiere { position: relative; inset: auto; height: 46vh; min-height: 300px; margin: 0 calc(-1 * var(--marge)); z-index: 0; }
   .hero::after { display: none; }
-  .hero-int { max-width: none; position: relative; z-index: 1; margin-top: -30px; }
+  /* sur téléphone, le curseur passe en premier, juste sous la matière : on
+     voit ce qu'on fait pendant qu'on le fait */
+  .hero-int { max-width: none; position: relative; z-index: 1; margin-top: -30px; display: flex; flex-direction: column; }
+  .hero-int .reunir { order: -1; margin: 0 0 30px; }
+  .hero-int .sur-titre { margin-top: 0; }
   .hero h1 { font-size: clamp(38px, 11vw, 52px); }
   .hero-texte { font-size: 17px; margin-top: 16px; }
   .hero-actions { margin-top: 22px; }
