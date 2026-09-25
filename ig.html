@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Grapper · post Instagram</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #222; display: grid; place-items: center; min-height: 100vh; font-family: "Instrument Sans", sans-serif; color: #fff; }
+  .cadre { position: relative; width: 540px; height: 675px; overflow: hidden; background: #07060d; }
+  .hero { position: absolute; inset: 0; }
+  .matiere, .goo { position: absolute; inset: 0; }
+  #grappe { width: 100%; height: 100%; display: block; }
+  #sortie { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .aide { position: fixed; left: 0; right: 0; bottom: 16px; text-align: center; font-size: 13px; color: #aaa; }
+  .aide a { color: #d6ff3d; }
+</style>
+</head>
+<body>
+<div class="cadre">
+  <div class="hero webgl"><div class="matiere"><div class="goo"><canvas id="grappe" width="1080" height="1350"></canvas></div></div></div>
+  <canvas id="sortie" width="1080" height="1350"></canvas>
+</div>
+<p class="aide" id="aide">Le film se joue et s'enregistre tout seul (9 s, 1080 × 1350).</p>
+<script>
+  window.MATIERE_CAPTURE = true;
+  window.MATIERE_STYLE = 3;
+  window.NIVEAU_ENERGIE = 1;
+  window.COHESION = 0;
+  window.MATIERE_CENTRE = { cx: 0, cy: 0.55 };
+</script>
+<script src="matiere.js"></script>
+<script>
+(async () => {
+  await document.fonts.load('600 64px "Instrument Sans"'); await document.fonts.load('italic 64px "Instrument Serif"');
+  const logo = new Image(); logo.src = "logo-lettres.png"; await new Promise((r) => { logo.onload = r; });
+  const src = document.getElementById("grappe"), out = document.getElementById("sortie"), ctx = out.getContext("2d");
+  const W = 1080, H = 1350, DUREE = 9000;
+  const ease = (t) => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+  const clamp = (v) => Math.max(0, Math.min(1, v));
+  const texte = (t, y, taille, alpha, serif, couleur) => {
+    ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = couleur || "#f4f1ff"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.font = serif ? `italic ${taille}px "Instrument Serif"` : `600 ${taille}px "Instrument Sans"`; ctx.fillText(t, W / 2, y); ctx.restore();
+  };
+  let flux, rec, morceaux = [], debut = 0;
+  const demarrer = () => {
+    flux = out.captureStream(30);
+    rec = new MediaRecorder(flux, { mimeType: "video/webm;codecs=vp9", videoBitsPerSecond: 12_000_000 });
+    rec.ondataavailable = (e) => morceaux.push(e.data);
+    rec.onstop = () => {
+      const blob = new Blob(morceaux, { type: "video/webm" }); const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = "grapper-grappe.webm"; a.click();
+      document.getElementById("aide").innerHTML = "Enregistré : <b>grapper-grappe.webm</b> (dans Téléchargements).";
+    };
+    rec.start(); debut = performance.now();
+  };
+  function image(now) {
+    if (!debut) { demarrer(); }
+    const t = now - debut, p = t / DUREE;
+    /* la cohésion monte entre 1,5 s et 6 s */
+    window.COHESION = ease(clamp((t - 1500) / 4500));
+    ctx.fillStyle = "#07060d"; ctx.fillRect(0, 0, W, H);
+    ctx.drawImage(src, 0, 0, W, H);
+    /* un voile en bas pour le texte */
+    const g = ctx.createLinearGradient(0, H * 0.6, 0, H); g.addColorStop(0, "rgba(7,6,13,0)"); g.addColorStop(1, "rgba(7,6,13,.9)");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    /* les mots */
+    const a1 = clamp((t - 300) / 500) * (1 - clamp((t - 1900) / 400));
+    texte("Des grains.", H * 0.80, 96, a1);
+    const a2 = clamp((t - 2100) / 500) * (1 - clamp((t - 5600) / 400));
+    texte("Ça pousse.", H * 0.80, 96, a2);
+    const a3 = clamp((t - 6000) / 600);
+    texte("Une grappe.", H * 0.76, 104, a3);
+    texte("C'est ça, Grapper.", H * 0.845, 60, a3, true, "#d6ff3d");
+    /* le logo, en bas, tout le temps */
+    ctx.save(); ctx.globalAlpha = 0.95; const lw = 260, lh = lw * logo.height / logo.width; ctx.drawImage(logo, (W - lw) / 2, H - lh - 70, lw, lh); ctx.restore();
+    if (t < DUREE) requestAnimationFrame(image); else rec.stop();
+  }
+  setTimeout(() => requestAnimationFrame(image), 800);
+})();
+</script>
+</body>
+</html>

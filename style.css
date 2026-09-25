@@ -436,7 +436,7 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
 
   /* écrire, pied */
   .contact { padding: 90px var(--marge); }
-  .mail { font-size: clamp(20px, 7.2vw, 30px); letter-spacing: -.02em; }
+  .mail { font-size: clamp(16px, 5.6vw, 28px); letter-spacing: -.02em; white-space: nowrap; }
   .pied { grid-template-columns: 1fr; gap: 14px; padding: 36px var(--marge); }
   .pied-liens { gap: 16px; }
 }
@@ -448,7 +448,7 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
   .apercu-ligne { grid-template-columns: 1fr auto; gap: 6px 8px; }
   .apercu-ligne em { grid-column: 2; font-size: 11px; }
   .apercu-ligne i { font-size: 10px; padding: 2px 6px; }
-  .mail { font-size: clamp(15px, 6.2vw, 30px); letter-spacing: -.01em; overflow-wrap: anywhere; }
+  .mail { font-size: clamp(14px, 5.4vw, 28px); letter-spacing: -.01em; white-space: nowrap; }
   .hero h1 { font-size: clamp(32px, 12vw, 52px); }
   .pilier, .pilier.espace { grid-template-columns: 34px 1fr; }
   .hero-actions { flex-direction: column; } .hero-actions .bouton { width: 100%; }
