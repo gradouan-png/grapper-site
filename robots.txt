@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /ig.html
+
+Sitemap: https://grapperagency.com/sitemap.xml
