@@ -143,12 +143,14 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
 
 /* la grappe : l'histoire */
 .grappe { padding: 140px var(--marge); border-top: 1px solid var(--bord); display: grid; grid-template-columns: 1fr 1.25fr; gap: 60px 90px; align-items: center; }
-.tableau { margin: 0; justify-self: center; width: min(100%, 420px); transform: rotate(-2deg); }
-.tableau-cadre { padding: 14px; background: #f4f1ff; border-radius: 4px; box-shadow: 0 40px 90px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.08); }
-.tableau-cadre img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
+.tableau { margin: 0; justify-self: center; width: min(100%, 460px); transform: rotate(-2deg); }
+.tableau-cadre { position: relative; padding: 18px; background: #f4f1ff; border: 7px solid #1a1626; border-radius: 2px; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.14), inset 0 0 0 1px rgba(0,0,0,.08); }
+.tableau-cadre::before { content: ""; position: absolute; inset: 18px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.14), inset 0 3px 10px rgba(0,0,0,.28); pointer-events: none; }
+.tableau-cadre.vide::before { display: none; }
+.tableau-cadre img { width: 100%; aspect-ratio: 1100/933; object-fit: cover; display: block; background: #f4f1ff; }
 .tableau-vide { display: none; }
 .tableau-cadre.vide { background: var(--verre); border: 1px dashed rgba(255,255,255,.2); box-shadow: none; }
-.tableau-cadre.vide .tableau-vide { display: grid; place-items: center; aspect-ratio: 4/5; font-family: var(--serif); font-style: italic; color: var(--texte-3); font-size: 18px; }
+.tableau-cadre.vide .tableau-vide { display: grid; place-items: center; aspect-ratio: 1; font-family: var(--serif); font-style: italic; color: var(--texte-3); font-size: 18px; }
 .tableau figcaption { margin-top: 14px; font-family: var(--serif); font-style: italic; color: var(--texte-2); text-align: center; font-size: 17px; }
 .parole { display: grid; gap: 10px; max-width: 620px; }
 .parole-tete { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
@@ -351,7 +353,7 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
   .hero-int { max-width: 56%; }
   .hero h1 { font-size: clamp(40px, 6.4vw, 64px); }
   .grappe { grid-template-columns: 1fr 1.4fr; gap: 30px 40px; }
-  .tableau { width: min(100%, 300px); }
+  .tableau { width: min(100%, 340px); }
   .apropos { grid-template-columns: 1fr; gap: 24px; }
   .apropos-tete { position: static; }
   .chiffres { grid-template-columns: repeat(3, 1fr); }
@@ -400,7 +402,7 @@ body.sur-lien .curseur-anneau { --c: 1.7; background: rgba(214,255,61,.14); bord
   /* la grappe : les bulles d'abord, la peinture plus petite ensuite */
   .grappe { grid-template-columns: 1fr; gap: 28px; padding: 70px var(--marge); }
   .parole { order: 1; }
-  .tableau { order: 2; width: min(100%, 260px); transform: rotate(-2deg); }
+  .tableau { order: 2; width: min(100%, 300px); transform: rotate(-2deg); }
   .bulle { padding: 14px 16px; } .bulle p { font-size: 16px; }
 
   /* à propos : les chiffres se font glisser */
